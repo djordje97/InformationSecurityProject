@@ -1,12 +1,7 @@
 package ib.project.config;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,21 +16,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+
 
 import ib.project.security.TokenHelper;
 import ib.project.security.auth.RestAuthenticationEntryPoint;
 import ib.project.security.auth.TokenAuthenticationFilter;
 import ib.project.service.CustomUserDetailsService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-/**
- * Created by fan.jin on 2016-10-19.
- */
 
 @Configuration
 @EnableWebSecurity
@@ -85,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint( restAuthenticationEntryPoint ).and()
                 .authorizeRequests()
                 //svim korisnicima dopusti da pristupe putanjama /auth/**
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/**","/api/users").permitAll()
                 //svaki zahtev mora biti autorizovan
                 .anyRequest().authenticated().and()
                 //presretni svaki zahtev filterom
@@ -101,7 +88,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers(
                 HttpMethod.POST,
-                "/auth/login"
+                "/auth/login",
+                "/api/users"
         );
         web.ignoring().antMatchers(
                 HttpMethod.GET,

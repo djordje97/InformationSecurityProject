@@ -1,5 +1,7 @@
 package ib.project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,14 @@ public class UserService implements UserServiceInterface {
 		// TODO Auto-generated method stub
 		return userRepository.findByEmail(email);
 	}
+
+	@Override
+	public List<User> findAll() {
+		// TODO Auto-generated method stub
+		return userRepository.findAll();
+	}
+	
+	
 	
 	
 }

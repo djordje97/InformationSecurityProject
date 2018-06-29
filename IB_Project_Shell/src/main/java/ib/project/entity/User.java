@@ -15,20 +15,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="users")
-public class User implements UserDetails {
+public class User implements UserDetails,Serializable {
 
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnore
+   
     @Column(name = "password")
     private String password;
 
@@ -47,7 +50,7 @@ public class User implements UserDetails {
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "authority_id"))
-    private Set<Authority> authorities=new HashSet<>();
+    private Set<Authority> userAuthorities=new HashSet<>();
 
    
 
@@ -83,13 +86,20 @@ public class User implements UserDetails {
 		this.active = active;
 	}
 
-	public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
-    }
 
-    @Override
+
+    public Set<Authority> getUserAuthorities() {
+		return userAuthorities;
+	}
+
+	public void setUserAuthorities(Set<Authority> userAuthorities) {
+		this.userAuthorities = userAuthorities;
+	}
+
+	@Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        return this.userAuthorities;
     }
 
     public String getEmail() {
@@ -100,6 +110,7 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return active;
@@ -125,8 +136,8 @@ public class User implements UserDetails {
     }
 
 	@Override
+	@JsonIgnore
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return email;
 	}
 
