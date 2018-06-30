@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="">Information security</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="container-fluid" style="margin: 5%;">
+  <div class="row">
+      <div class="col-md"></div>
+      <div class="col-md-6">
+        <form class="form">
+            <div class="form-group">
+                <mat-form-field class="form-field">
+                    <input matInput placeholder="Email">
+                  </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-form-field class="form-field">
+                    <input matInput type="password" placeholder="Password">
+                  </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" style="margin-left: 15%;margin-top: 2%;">Login</button>
+        </form>
+      </div>
+      <div class="col-md"></div>
+  </div>
+</div>
