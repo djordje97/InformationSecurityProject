@@ -19,15 +19,18 @@
         <form class="form">
             <div class="form-group">
                 <mat-form-field class="form-field">
-                    <input matInput placeholder="Email">
+                    <input matInput placeholder="Email" name="username"  (focus)="focus()" #username="ngModel" id="username" [(ngModel)]="credentials.username">
                   </mat-form-field>
             </div>
             <div class="form-group">
                 <mat-form-field class="form-field">
-                    <input matInput type="password" placeholder="Password">
+                    <input matInput type="password" placeholder="Password" #password="ngModel" (focus)="focus()" id="password" name="password" [(ngModel)]="credentials.password">
                   </mat-form-field>
             </div>
-            <button mat-raised-button color="primary" style="margin-left: 15%;margin-top: 2%;">Login</button>
+            <mat-error *ngIf="message == true">
+              Yours credentials are wrong!
+            </mat-error>
+            <button type="submit" mat-raised-button color="primary" (click)="login()" style="margin-left: 15%;margin-top: 2%;">Login</button>
         </form>
       </div>
       <div class="col-md"></div>

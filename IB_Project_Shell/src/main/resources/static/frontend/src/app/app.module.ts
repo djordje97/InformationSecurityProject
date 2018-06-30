@@ -6,8 +6,11 @@ import { LoginComponent } from './login/login.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from "@angular/material/input"
+import {HttpClientModule} from "@angular/common/http"
 import {MatButtonModule} from "@angular/material/button";
 import { RegisterComponent } from './register/register.component'
+import { UserService } from './service/user.service';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -22,9 +25,11 @@ import { RegisterComponent } from './register/register.component'
     MatCheckboxModule,
     MatInputModule,
     MatButtonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
