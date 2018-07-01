@@ -69,6 +69,16 @@ public class UserContoller {
 		return new ResponseEntity<List<UserDto>>(active,HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/all/username")
+	public ResponseEntity<List<String>>allUSernames(){
+		List< User> users=userService.findAll();
+		List<String>usernames=new ArrayList<>();
+		for (User user : users) {
+			usernames.add(user.getEmail());
+		}
+		return new ResponseEntity<List<String>>(usernames,HttpStatus.OK);
+	}
+	
 	@PostMapping(consumes="application/json")
 	public ResponseEntity<User> addUser(@RequestBody UserDto user){
 		Authority authority=authorityService.findByName("ROLE_REGULAR");

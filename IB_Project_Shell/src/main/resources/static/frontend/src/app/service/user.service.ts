@@ -11,4 +11,12 @@ export class UserService {
   public login(credential:any):any{
     return this.http.post("api/auth/login",credential);
   }
+
+  public getUsernames():any{
+    return this.http.get("api/users/all/username");
+  }
+
+  public register(user:any):any{
+    return this.http.post("api/users",user);
+  }
 }
