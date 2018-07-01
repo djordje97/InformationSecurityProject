@@ -94,9 +94,12 @@ public class UserContoller {
 		return new ResponseEntity<User>(newUser,HttpStatus.CREATED);
 	}
 	
-	@PutMapping(value="/{username}", consumes="application/json")
-	public ResponseEntity<User> updateUser(@PathParam("username")String username){
-		User user=userService.findByEmail(username);
+	@PutMapping(value="/edit")
+//	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<User> updateUser(@RequestBody String email){
+		System.out.println("Usao u metodu");
+		System.out.println(email);
+		User user=userService.findByEmail(email);
 		if(user == null)
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		user.setActive(true);

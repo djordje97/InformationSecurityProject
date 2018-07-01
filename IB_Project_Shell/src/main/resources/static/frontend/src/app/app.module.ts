@@ -11,13 +11,16 @@ import {MatButtonModule} from "@angular/material/button";
 import { RegisterComponent } from './register/register.component'
 import { UserService } from './service/user.service';
 import {FormsModule} from '@angular/forms';
+import { UsersComponent } from './users/users.component';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import {FormsModule} from '@angular/forms';
     MatButtonModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatTableModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

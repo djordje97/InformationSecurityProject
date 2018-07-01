@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,55 @@ export class UserService {
 
   public register(user:any):any{
     return this.http.post("api/users",user);
+  }
+
+  public getAllActive():any{
+    var token=localStorage.getItem("token");
+    var head={
+      "Authorization": "Bearer " + token,
+      'Content-Type': 'application/json'
+    };
+    let  httpOptions= {
+  header: new  HttpHeaders(head)
+    };
+    return this.http.get("api/users/all/active",{headers:httpOptions.header});
+  }
+
+  getAll():any{
+    var token=localStorage.getItem("token");
+    var head={
+      "Authorization": "Bearer " + token,
+      'Content-Type': 'application/json'
+    };
+    let  httpOptions= {
+  header: new  HttpHeaders(head)
+    };
+    return this.http.get("api/users",{headers:httpOptions.header});
+  }
+
+  logged():any{
+    var token=localStorage.getItem("token");
+    var head={
+      "Authorization": "Bearer " + token,
+      'Content-Type': 'application/json'
+    };
+let  httpOptions= {
+  header: new  HttpHeaders(head)
+};
+    return this.http.get("api/users/logged",{headers:httpOptions.header});
+  }
+
+  activate(email:string):any{
+    var token=localStorage.getItem("token");
+    console.log(token);
+    var head={
+      "Authorization": "Bearer " + token,
+      'Content-Type': 'application/json'
+    };
+  let  httpOptions= {
+  header: new  HttpHeaders(head)
+    };
+    console.log("U service: "+email);
+    return this.http.put("api/users/edit",email,{headers:httpOptions.header});
   }
 }

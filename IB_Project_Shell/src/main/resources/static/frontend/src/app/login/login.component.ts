@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   login(){
       this.userService.login(this.credentials).subscribe(data =>{
         localStorage.setItem("token",data.access_token);
-        alert("Success");
+        this.router.navigate(['/users']);
       },error =>{
          switch(error.status){
            case 500:
