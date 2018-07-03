@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -90,11 +90,21 @@ let  httpOptions= {
     console.log(token);
     var head={
       "Authorization": "Bearer " + token,
-      "ResponseType":'blob'
     };
   let  httpOptions= {
   header: new  HttpHeaders(head)
     };
-    return this.http.post("api/demo/download/jks",username,{headers:httpOptions.header});
+    return this.http.post("api/demo/download/jks",username,{headers:httpOptions.header,responseType:"blob",observe:'response'});
+  }
+  downloadCer(username:string):any{
+    var token=localStorage.getItem("token");
+    console.log(token);
+    var head={
+      "Authorization": "Bearer " + token,
+    };
+  let  httpOptions= {
+  header: new  HttpHeaders(head)
+    };
+    return this.http.post("api/demo/download/cer",username,{headers:httpOptions.header,responseType:"blob",observe:'response'});
   }
 }

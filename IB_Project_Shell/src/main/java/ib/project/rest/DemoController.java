@@ -65,10 +65,25 @@ public class DemoController {
 		System.out.println(email);
 		User user=userService.findByEmail(email);
 		File file = new File("C:\\Users\\Djole\\InformationSecurityProject\\IB_Project_Shell\\data\\"+user.getEmail()+".jks");
-		System.out.println(file.getName());
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.add("filename",user.getEmail()+".jks");
+		System.out.println(headers.get("filename"));
+		byte[] bFile = readBytesFromFile(file.toString());
+
+		return ResponseEntity.ok().headers(headers).body(bFile);
+	}
+	
+	@RequestMapping(value = "/download/cer", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> downloadCer(@RequestBody String email) {
+		System.out.println("USao u download");
+		System.out.println(email);
+		User user=userService.findByEmail(email);
+		File file = new File("C:\\Users\\Djole\\InformationSecurityProject\\IB_Project_Shell\\data\\"+user.getCertificate());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("filename",user.getCertificate());
+		System.out.println(headers.get("filename"));
 		byte[] bFile = readBytesFromFile(file.toString());
 
 		return ResponseEntity.ok().headers(headers).body(bFile);
