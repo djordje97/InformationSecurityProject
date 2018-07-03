@@ -138,6 +138,9 @@ public class WriteMailClient extends MailClient {
 			//TODO 5: kreiranje EncryptedData objekata, postavljanje KeyInfo objekata
 			EncryptedData encryptedData = xmlCipher.getEncryptedData();
 			encryptedData.setKeyInfo(keyInfo);
+			
+			WriteMailClient sign = new WriteMailClient();
+			sign.signingDocument(doc);
 
 			//TODO 6: kriptovati sadrzaj dokumenta
 			NodeList mails = doc.getElementsByTagName("mail");
@@ -146,8 +149,7 @@ public class WriteMailClient extends MailClient {
 			
 			xmlCipher.doFinal(doc, mail, true);
 			
-			WriteMailClient sign = new WriteMailClient();
-			sign.signingDocument(doc);
+			
 
 			// Slanje poruke
 			String encryptedXml = xmlAsString(doc);
