@@ -80,31 +80,35 @@ export class UsersComponent implements OnInit {
   }
 
   downloadJks(){
-    var jwtoken=localStorage.getItem("token");
-    // var xhr=new XMLHttpRequest();
-    // xhr.open('GET','api/demo/download/jks/'+this.username,true);
-    // xhr.responseType='blob';
-    // xhr.setRequestHeader('Authorization', 'Bearer ' + jwtoken);
-    // xhr.onload=function(e){
-    //   if(this.status == 200){
-    //     var blob=this.response;
-    //     var a=document.createElement('a');
-    //     var url=window.URL.createObjectURL(blob);
-    //     a.href=url;
-    //     a.download=xhr.getResponseHeader('filename');
-    //     a.click();
-    //     window.URL.revokeObjectURL(url);
-    //   }
-    // }
     this.userService.downloadJks(this.username).subscribe(data =>{
       console.log(data);
-      var blob=data
-        var a=document.createElement('a');
-        var url=window.URL.createObjectURL(blob);
-        a.href=url;
-        a.download=data.getResponseHeader('filename');
-        a.click();
-        window.URL.revokeObjectURL(url);
+      console.log("oo je : "+data.headers.get('filename'))
+      var url = window.URL.createObjectURL(data.body);
+      var a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = data.headers.get('filename');
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove(); // remove the elemen
+    });
+  }
+
+  downloadCer(email){
+    console.log("Parametar: ",email)
+    this.userService.downloadCer(email).subscribe(data =>{
+      console.log(data);
+      console.log("oo je : "+data.headers.get('filename'))
+      var url = window.URL.createObjectURL(data.body);
+      var a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = data.headers.get('filename');
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove(); // remove the elemen
     });
   }
 }
