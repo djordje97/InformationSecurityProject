@@ -23,6 +23,8 @@ import ib.project.entity.User;
 import ib.project.entity.UserDto;
 import ib.project.service.AuthorityServiceInterface;
 import ib.project.service.UserServiceInterface;
+import ib.project.util.KeyStoreReader;
+import ib.project.util.SignedCertificateGenerator;
 
 
 @RestController
@@ -95,7 +97,7 @@ public class UserContoller {
 	}
 	
 	@PutMapping(value="/edit")
-//	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<User> updateUser(@RequestBody String email){
 		System.out.println("Usao u metodu");
 		System.out.println(email);
@@ -103,6 +105,7 @@ public class UserContoller {
 		if(user == null)
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		user.setActive(true);
+		SignedCertificateGenerator sig=new SignedCertificateGenerator(email,"123".toCharArray(),"rootCA".toCharArray());
 		user=userService.save(user);
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}

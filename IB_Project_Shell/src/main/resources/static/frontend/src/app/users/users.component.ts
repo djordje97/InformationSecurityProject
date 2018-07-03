@@ -13,12 +13,18 @@ export class UsersComponent implements OnInit {
   users;
   dataSource;
   admin=false;
-  displayedColumns: string[] = ['email', 'jks', 'cer'];
+  username;
+  fileList:FileList;
+  file:File;
+  message=false;
+  displayedColumns: string[] = ['email', 'cer'];
   constructor(private routre:Router,private userService:UserService) { }
   
 
   ngOnInit() {
     this.userService.logged().subscribe(res =>{
+      console.log("Logged: "+res);
+      this.username=res.email;
       this.userService.getAllActive().subscribe(data =>{
         console.log(data);
         this.users=data;
@@ -61,5 +67,44 @@ export class UsersComponent implements OnInit {
         window.location.reload(true);
     });
   
+  }
+  selectFile(event) {
+    this.fileList = event.target.files;
+  }
+
+  upload(){
+    this.file=this.fileList.item(0);
+    this.userService.uploadCer(this.file,this.username).subscribe(data=>{
+        this.message=true;
+    });
+  }
+
+  downloadJks(){
+    var jwtoken=localStorage.getItem("token");
+    // var xhr=new XMLHttpRequest();
+    // xhr.open('GET','api/demo/download/jks/'+this.username,true);
+    // xhr.responseType='blob';
+    // xhr.setRequestHeader('Authorization', 'Bearer ' + jwtoken);
+    // xhr.onload=function(e){
+    //   if(this.status == 200){
+    //     var blob=this.response;
+    //     var a=document.createElement('a');
+    //     var url=window.URL.createObjectURL(blob);
+    //     a.href=url;
+    //     a.download=xhr.getResponseHeader('filename');
+    //     a.click();
+    //     window.URL.revokeObjectURL(url);
+    //   }
+    // }
+    this.userService.downloadJks(this.username).subscribe(data =>{
+      console.log(data);
+      var blob=data
+        var a=document.createElement('a');
+        var url=window.URL.createObjectURL(blob);
+        a.href=url;
+        a.download=data.getResponseHeader('filename');
+        a.click();
+        window.URL.revokeObjectURL(url);
+    });
   }
 }

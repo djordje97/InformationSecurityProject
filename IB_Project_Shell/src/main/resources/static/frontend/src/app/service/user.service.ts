@@ -69,4 +69,32 @@ let  httpOptions= {
     console.log("U service: "+email);
     return this.http.put("api/users/edit",email,{headers:httpOptions.header});
   }
+  uploadCer(file:File,email:string):any{
+    var token=localStorage.getItem("token");
+    console.log(token);
+    var head={
+      "Authorization": "Bearer " + token,
+    };
+  let  httpOptions= {
+  header: new  HttpHeaders(head)
+    };
+   let formData:FormData=new FormData();
+   formData.append('file',file);
+   formData.append('email',email);
+
+
+   return this.http.post("api/demo/upload",formData,{headers:httpOptions.header});
+  }
+  downloadJks(username:string):any{
+    var token=localStorage.getItem("token");
+    console.log(token);
+    var head={
+      "Authorization": "Bearer " + token,
+      "ResponseType":'blob'
+    };
+  let  httpOptions= {
+  header: new  HttpHeaders(head)
+    };
+    return this.http.post("api/demo/download/jks",username,{headers:httpOptions.header});
+  }
 }

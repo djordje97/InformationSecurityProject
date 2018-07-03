@@ -14,7 +14,7 @@
 
 <div class="container-fluid" style="margin: 5%;">
 <div class="row">
-    <div class="col-md"></div>
+    <div class="col-md"><button type="submit" style="margin-left: 2%;" mat-raised-button color="primary" (click)="downloadJks()">Download your jks</button></div>
     <div class="col-md-6">
       <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -28,27 +28,31 @@
           <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
       
-        <!-- Weight Column -->
-        <ng-container matColumnDef="jks">
-          <th mat-header-cell *matHeaderCellDef> jks </th>
-          <td mat-cell *matCellDef="let element"> jks </td>
-        </ng-container>
       
         <!-- Symbol Column -->
         <ng-container matColumnDef="cer">
           <th mat-header-cell *matHeaderCellDef> Certificate </th>
-          <td mat-cell *matCellDef="let element"> Certificate </td>
+          <td mat-cell *matCellDef="let element"> <button type="submit" *ngIf="element.email != username" style="margin-left: 2%;" mat-raised-button color="primary" (click)="login()">Download Certificate</button> </td>
         </ng-container>
         
         <ng-container matColumnDef="activate" *ngIf="admin == true">
           <th mat-header-cell *matHeaderCellDef> Activate </th>
-          <td mat-cell *matCellDef="let element">   <button type="submit" (click)="activate($event)" name="{{element.email}}" mat-raised-button color="primary" (click)="login()" *ngIf="element.active == false">Activate</button></td>
+          <td mat-cell *matCellDef="let element">   <button type="submit" (click)="activate($event)" name="{{element.email}}" mat-raised-button color="primary"  *ngIf="element.active == false">Activate</button></td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <div class="col-md"></div>
+    <div class="col-md">
+      <form enctype="multipart/form-data" ng-submit="upload()" style="border: 3px solid tomato; margin: 3%;">
+        <label>Select your Certificate</label>
+        <input type="file" style="margin: 2%;" mat-raised-button color="primary" (change)="selectFile($event)" value="Upload your Certificate">
+      <button type="submit" style="margin-left: 2%;" mat-raised-button color="primary" (click)="upload()">Upload your Certificate</button>
+      </form>
+      <div class="alert alert-success" role="alert" *ngIf="message == true">
+        Upload successiful!
+      </div>
+    </div>
 </div>
 </div>
